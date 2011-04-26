@@ -26,8 +26,8 @@ nnoremap <C-Up> <C-w>+
 nnoremap <C-Down> <C-w>-
 nnoremap <C-S-Left> <C-w>h
 nnoremap <C-S-Right> <C-w>l
-nnoremap <C-S-Up> <C-w>j
-nnoremap <C-S-Down> <C-w>k
+nnoremap <C-S-Up> <C-w>k
+nnoremap <C-S-Down> <C-w>j
 
 au FileType python setl tabstop=2 shiftwidth=2 softtabstop=2
 
