@@ -13,10 +13,21 @@ set hlsearch
 set t_Co=256
 set hidden
 set wildmenu
+set splitbelow
+set splitright
 colo mustang
 set completeopt=longest,menuone
 
 nmap <space> <PageDown>
+
+nnoremap <C-Left> <C-w><
+nnoremap <C-Right> <C-w>>
+nnoremap <C-Up> <C-w>+
+nnoremap <C-Down> <C-w>-
+nnoremap <C-S-Left> <C-w>h
+nnoremap <C-S-Right> <C-w>l
+nnoremap <C-S-Up> <C-w>j
+nnoremap <C-S-Down> <C-w>k
 
 au FileType python setl tabstop=2 shiftwidth=2 softtabstop=2
 
@@ -28,20 +39,6 @@ if exists('loaded_taglist')
 	nmap <silent> <F8> :TlistToggle<CR>
 endif
 
-"imap <C-f> <C-x><C-o>
-"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-"inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
-"inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
-"inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-"inoremap <expr> <PageUp> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-"inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
-"\ "\<lt>C-n>" :
-"\ "\<lt>C-x>\<lt>C-o><c-r>=pumvisible() ?" .
-"\ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
-"\ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
-"imap <C-@> <C-Space>
-"inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : ""
-
 noremap <C-j> <Esc>:bn<CR>
 noremap <C-k> <Esc>:bp<CR>
 noremap <C-h> <Esc>:bp<CR>
@@ -52,3 +49,31 @@ inoremap <F12> <C-o>:syntax sync fromstart<CR>
 
 "let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
 let g:SuperTabDefaultCompletionType = "context"
+
+function! s:ExecuteInShell(command, bang)
+    let _ = a:bang != '' ? s:_ : a:command == '' ? '' : join(map(split(a:command), 'expand(v:val)'))
+
+    if (_ != '')
+        let s:_ = _
+        let bufnr = bufnr('%')
+        let winnr = bufwinnr('^' . _ . '$')
+        silent! execute  winnr < 0 ? 'new ' . fnameescape(_) : winnr . 'wincmd w'
+        setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
+        silent! :%d
+        let message = 'Execute ' . _ . '...'
+        call append(0, message)
+        echo message
+        silent! 2d | resize 1 | redraw
+        silent! execute 'silent! %!'. _
+        silent! execute 'resize ' . line('$')
+        silent! execute 'syntax on'
+        silent! execute 'autocmd BufUnload <buffer> execute bufwinnr(' . bufnr . ') . ''wincmd w'''
+        silent! execute 'autocmd BufEnter <buffer> execute ''resize '' .  line(''$'')'
+        silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . _ . ''', '''')<CR>'
+        silent! execute 'nnoremap <silent> <buffer> <LocalLeader>g :execute bufwinnr(' . bufnr . ') . ''wincmd w''<CR>'
+        silent! syntax on
+    endif
+endfunction
+
+command! -complete=shellcmd -nargs=* -bang Shell call s:ExecuteInShell(<q-args>, '<bang>')
+
