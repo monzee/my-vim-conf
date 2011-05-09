@@ -1,5 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_cnt =8
 let g:netrw_dirhist_1='/home/mon/.pentadactyl'
 let g:netrw_dirhist_2='/home/mon/www/ausphil/beta/src/vendors/mon/Naf/Mvc'
 let g:netrw_dirhist_3='/home/mon/dev/naf/library/Naf/Mvc/View/Template/Expression'
@@ -7,3 +7,4 @@ let g:netrw_dirhist_4='/home/mon/dev/synlyt/library/Syn/Tokenizer'
 let g:netrw_dirhist_5='/home/mon/projects/python/google-python-exercises'
 let g:netrw_dirhist_6='/home/mon/www/ausphil/beta/src/views/dmci2'
 let g:netrw_dirhist_7='/home/mon/dev/naf/demo/src/helpers'
+let g:netrw_dirhist_8='/home/mon/dev/nafjs/lib/naf/model'
