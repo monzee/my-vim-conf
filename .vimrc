@@ -18,8 +18,11 @@ set splitright
 colo mustang
 set completeopt=longest,menuone
 
+match ErrorMsg /\%81v.\+/
 nmap <space> <PageDown>
-
+nnoremap j gj
+nnoremap k gk
+"window movement
 nnoremap <C-Left> <C-w><
 nnoremap <C-Right> <C-w>>
 nnoremap <C-Up> <C-w>+
@@ -28,6 +31,13 @@ nnoremap <C-S-Left> <C-w>h
 nnoremap <C-S-Right> <C-w>l
 nnoremap <C-S-Up> <C-w>k
 nnoremap <C-S-Down> <C-w>j
+"indent in visual mode
+vmap <Tab> >gv
+vmap <S-Tab> <gv
+"clear search
+nnoremap <silent> <leader><space> :let @/=''<CR>
+"save on alt-tab
+au FocusLost * :wa
 
 au FileType python setl tabstop=2 shiftwidth=2 softtabstop=2
 
@@ -38,7 +48,7 @@ autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 if exists('loaded_taglist')
 	nmap <silent> <F8> :TlistToggle<CR>
 endif
-
+"buffer selection
 noremap <C-j> <Esc>:bn<CR>
 noremap <C-k> <Esc>:bp<CR>
 noremap <C-h> <Esc>:bp<CR>
