@@ -19,9 +19,10 @@ colo mustang
 set completeopt=longest,menuone
 
 match ErrorMsg /\%81v.\+/
-nmap <space> <PageDown>
-nnoremap j gj
-nnoremap k gk
+map <space> <PageDown>
+map j gj
+map k gk
+
 "window movement
 nnoremap <C-Left> <C-w><
 nnoremap <C-Right> <C-w>>
@@ -68,22 +69,31 @@ function! s:ExecuteInShell(command, bang)
         let bufnr = bufnr('%')
         let winnr = bufwinnr('^' . _ . '$')
         silent! execute  winnr < 0 ? 'new ' . fnameescape(_) : winnr . 'wincmd w'
+        let s:lastShell = bufnr('%')
         setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
         silent! :%d
-        let message = 'Execute ' . _ . '...'
+        let message = 'Executing ' . _ . '...'
         call append(0, message)
         echo message
         silent! 2d | resize 1 | redraw
         silent! execute 'silent! %!'. _
         silent! execute 'resize ' . line('$')
-        silent! execute 'syntax on'
+"        silent! execute 'syntax on'
         silent! execute 'autocmd BufUnload <buffer> execute bufwinnr(' . bufnr . ') . ''wincmd w'''
         silent! execute 'autocmd BufEnter <buffer> execute ''resize '' .  line(''$'')'
+        silent! execute 'autocmd BufLeave <buffer> execute "resize " . min([5, line("$")])'
         silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . _ . ''', '''')<CR>'
         silent! execute 'nnoremap <silent> <buffer> <LocalLeader>g :execute bufwinnr(' . bufnr . ') . ''wincmd w''<CR>'
-        silent! syntax on
+"        silent! syntax on
+    endif
+endfunction
+
+function! RerunLastShell()
+    if s:lastShell > 0
+        call s:ExecuteInShell(s:_, '')
     endif
 endfunction
 
 command! -complete=shellcmd -nargs=* -bang Shell call s:ExecuteInShell(<q-args>, '<bang>')
-
+let s:lastShell = -1
+nnoremap <silent> <leader>r :call RerunLastShell()<cr>
