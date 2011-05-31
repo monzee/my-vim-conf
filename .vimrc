@@ -54,7 +54,7 @@ noremap <C-j> <Esc>:bn<CR>
 noremap <C-k> <Esc>:bp<CR>
 noremap <C-h> <Esc>:bp<CR>
 noremap <C-l> <Esc>:bn<CR>
-noremap <C-f><C-f> :FufFile<CR>
+noremap <leader>f :FufFile<CR>
 noremap <F12> <Esc>:syntax sync fromstart<CR>
 inoremap <F12> <C-o>:syntax sync fromstart<CR>
 
