@@ -1,3 +1,5 @@
+call pathogen#infect()
+
 set nu
 set showcmd
 set ignorecase
@@ -17,6 +19,7 @@ set splitbelow
 set splitright
 colo mustang
 set completeopt=longest,menuone
+set scrolloff=5
 
 match ErrorMsg /\%81v.\+/
 map <space> <PageDown>
@@ -97,3 +100,4 @@ endfunction
 command! -complete=shellcmd -nargs=* -bang Shell call s:ExecuteInShell(<q-args>, '<bang>')
 let s:lastShell = -1
 nnoremap <silent> <leader>r :call RerunLastShell()<cr>
+
