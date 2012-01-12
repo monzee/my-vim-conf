@@ -1,1 +1,1 @@
-Link .vimrc and .gvimrc to home
+Clone this dir into ~/.vim and link .vimrc and .gvimrc to ~
