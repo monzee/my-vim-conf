@@ -22,11 +22,14 @@ set splitright
 colo mustang
 set completeopt=longest,menuone
 set scrolloff=5
+"for vim 7.3+
+set cc=81
 
-match ErrorMsg /\%81v.\+/
+"match ErrorMsg /\%81v.\+/
 map <space> <PageDown>
 map j gj
 map k gk
+map Y y$
 
 "window movement
 nnoremap <C-Left> <C-w><
@@ -42,12 +45,14 @@ vmap <Tab> >gv
 vmap <S-Tab> <gv
 "clear search
 nnoremap <silent> <leader><space> :let @/=''<CR>
+
 "save on alt-tab
 au FocusLost * :wa
 
 au BufRead,BufNewFile *.phtml setl ts=2 sw=2 sts=2
 au FileType python setl tabstop=2 shiftwidth=2 softtabstop=2
 au FileType javascript setl tabstop=2 shiftwidth=2 softtabstop=2
+au FileType html   setl tabstop=2 shiftwidth=2 softtabstop=2
 
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -61,7 +66,6 @@ noremap <C-j> <Esc>:bn<CR>
 noremap <C-k> <Esc>:bp<CR>
 noremap <C-h> <Esc>:bp<CR>
 noremap <C-l> <Esc>:bn<CR>
-noremap <leader>f :FufFile<CR>
 noremap <F12> <Esc>:syntax sync fromstart<CR>
 inoremap <F12> <C-o>:syntax sync fromstart<CR>
 
@@ -105,3 +109,11 @@ command! -complete=shellcmd -nargs=* -bang Shell call s:ExecuteInShell(<q-args>,
 let s:lastShell = -1
 nnoremap <silent> <leader>r :call RerunLastShell()<cr>
 
+let g:ctrlp_working_path_mode = 2
+set wildignore+=*/.git/*,*/.git/*,*/.svn/*,.*.swp
+
+nnoremap <leader>f :FufFile<cr>
+nnoremap <leader>t :FufBuffer<cr>
+
+nnoremap <leader>o :NERDTreeToggle<cr>
+let NERDTreeQuitOnOpen=1
