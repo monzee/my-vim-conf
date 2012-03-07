@@ -1,7 +1,7 @@
 colo mustang
 set nu
 set showcmd
-set guifont=Droid\ Sans\ Mono\ 11
+set guifont=Droid\ Sans\ Mono\ 9
 set lines=36
 set columns=100
 set ignorecase

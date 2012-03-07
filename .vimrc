@@ -1,5 +1,7 @@
 call pathogen#infect()
 
+syntax on
+
 set nu
 set showcmd
 set ignorecase
@@ -43,7 +45,9 @@ nnoremap <silent> <leader><space> :let @/=''<CR>
 "save on alt-tab
 au FocusLost * :wa
 
+au BufRead,BufNewFile *.phtml setl ts=2 sw=2 sts=2
 au FileType python setl tabstop=2 shiftwidth=2 softtabstop=2
+au FileType javascript setl tabstop=2 shiftwidth=2 softtabstop=2
 
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
