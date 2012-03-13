@@ -47,7 +47,7 @@ vmap <S-Tab> <gv
 nnoremap <silent> <leader><space> :let @/=''<CR>
 
 "save on alt-tab
-au FocusLost * :wa
+"au FocusLost * :wa
 
 au BufRead,BufNewFile *.phtml setl ts=2 sw=2 sts=2
 au FileType python setl tabstop=2 shiftwidth=2 softtabstop=2
