@@ -45,12 +45,20 @@ vmap <Tab> >gv
 vmap <S-Tab> <gv
 "clear search
 nnoremap <silent> <leader><space> :let @/=''<CR>
+"emacs movement keys
+noremap b B
+noremap f E
+noremap d dw
+inoremap <M-b> <S-Left>
+inoremap f <S-Right>
+inoremap d <Esc>ldwi
 
 "save on alt-tab
 au FocusLost * :wa
 
 au BufRead,BufNewFile *.phtml setl ts=2 sw=2 sts=2
 au FileType python setl tabstop=2 shiftwidth=2 softtabstop=2
+au FileType ruby setl tabstop=2 shiftwidth=2 softtabstop=2
 au FileType javascript setl tabstop=2 shiftwidth=2 softtabstop=2
 au FileType html   setl tabstop=2 shiftwidth=2 softtabstop=2
 
@@ -117,3 +125,16 @@ nnoremap <leader>t :FufBuffer<cr>
 
 nnoremap <leader>o :NERDTreeToggle<cr>
 let NERDTreeQuitOnOpen=1
+
+" turns 'lambda' to the greek char
+au VimEnter * syntax keyword Statement lambda conceal cchar=λ
+au VimEnter * hi! link Conceal Statement
+au VimEnter * set conceallevel=2
+
+au FileType scheme setl tabstop=2 shiftwidth=2 softtabstop=2
+au FileType scala setl tabstop=2 shiftwidth=2 softtabstop=2
+
+set cursorline
+hi! link ColorColumn CursorColumn
+set go=aegit
+set guifont=Cousine\ 9
